@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour {
         {
 
             rb.AddForce(new Vector2(0, 400));
-            Debug.Log("salta");
+           
             an.SetBool("moving", false);
         }
 
@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour {
 	// Tb chama a funçao Shoot(), que efetivamente efetua o disparo
 	void UpdateShooting(){
 		timeShooting += Time.deltaTime;
-		if(  Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.Space) ){
+		if(  Input.GetMouseButtonUp(0) ){
 			shooting = false;
 			shootingEffect.SetActive(false);
 			Shoot();
@@ -178,37 +178,8 @@ public class PlayerController : MonoBehaviour {
     }
 
 	// Atualizar a velocidade do nosso Player baseando-se nas teclas pressionadas
-	void UpdateMove(){
 
-        
-		if( Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow) ){
-			rb.velocity = Vector2.right*velocity;
-			if( bodyTransform.localScale.x > 0f )
-				bodyTransform.localScale = new Vector3( -bodyTransform.localScale.x, bodyTransform.localScale.y, 0f );
-
-			an.SetBool("moving", true);
-		}
-		else if( !Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow) ){
-			rb.velocity = -Vector2.right*velocity;
-			if( bodyTransform.localScale.x < 0f )
-				bodyTransform.localScale = new Vector3( -bodyTransform.localScale.x, bodyTransform.localScale.y, 0f );
-
-			an.SetBool("moving", true);
-		}
-
-        
-        else {
-			rb.velocity = Vector2.zero;
-			an.SetBool("moving", false);
-            
-        }
-	}
 
 	// Funçao chamada em todo frame no qual ha colissao entre o Collider de Player e outro Collider
-	void OnCollisionStay2D( Collision2D other ){
-		// So atualizamos a velocidade em x do Player qdo este estiver nao chao
-		if( other.collider.tag == "Ground" ){
-		//UpdateMove();
-		}
-	}
+
 }
