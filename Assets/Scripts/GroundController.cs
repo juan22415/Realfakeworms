@@ -38,11 +38,20 @@ public class GroundController : MonoBehaviour {
 	
 	}
 
+    public float distancedmg (CircleCollider2D cc)
+
+    {
+        V2int c = World2Pixel(cc.bounds.center.x, cc.bounds.center.y);
+        
+        return c.x;
+    }
+
 	public void DestroyGround( CircleCollider2D cc ){
 		
 
 		V2int c = World2Pixel(cc.bounds.center.x, cc.bounds.center.y);
-		// c => centro do circulo de destruiçao em pixels
+        // c => centro do circulo de destruiçao em pixels
+       
 		int r = Mathf.RoundToInt(cc.bounds.size.x*widthPixel/widthWorld);
 		// r => raio do circulo de destruiçao em 
 

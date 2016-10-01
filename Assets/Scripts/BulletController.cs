@@ -17,6 +17,7 @@ public class BulletController : MonoBehaviour {
 	public CircleCollider2D destructionCircle;
 	public static GroundController groundController;
     public float timew = 5f;
+    public static float gmgdistance;
 
     // Use this for initialization
     void Start () {
@@ -34,6 +35,7 @@ public class BulletController : MonoBehaviour {
 
             if (timew < 0)
             {
+                gmgdistance = groundController.distancedmg(destructionCircle);
                 groundController.DestroyGround(destructionCircle);
                 Destroy(gameObject);
 
@@ -66,6 +68,7 @@ public class BulletController : MonoBehaviour {
           
             if (PlayerController.weapon == 1)
             {
+                gmgdistance = groundController.distancedmg(destructionCircle);
                 groundController.DestroyGround(destructionCircle);
                 Destroy(gameObject);
             }

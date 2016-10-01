@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour {
 	public Transform bulletInitialTransform; // ref para o Transform que guarda a posiçao inicial da bala
     public static int weapon;
 	private bool targetting; // o player esta mirando?
+    public float health = 100; // vida jugador
+    public float dmgcenter; // posision centro explosion
 
 	// Use this for initialization
 	void Start () {
@@ -177,9 +179,27 @@ public class PlayerController : MonoBehaviour {
         granadetransform.localEulerAngles = new Vector3(0f, 0f, angle+180);
     }
 
-	// Atualizar a velocidade do nosso Player baseando-se nas teclas pressionadas
+    void OnTriggerEnter2D(Collider2D dmg) //colision con balas
+    {
+        if (dmg.tag == "ammo")
+        {
+            dmgcenter = BulletController.gmgdistance;
+            dmgcenter = bodyTransform.transform.position.x-dmgcenter; // posision del player - posision centro explosion
+            if (dmgcenter>0)//machetazo
+            {
+                dmgcenter = dmgcenter * -100;
+            }
+            dmgcenter = dmgcenter * -0.05f;//dmgcenter se multiplica para hacerlo maximo 50
+            health = health-dmgcenter;
+        }
+        Debug.Log(health);
+    }
 
 
-	// Funçao chamada em todo frame no qual ha colissao entre o Collider de Player e outro Collider
 
-}
+        // Atualizar a velocidade do nosso Player baseando-se nas teclas pressionadas
+
+
+        // Funçao chamada em todo frame no qual ha colissao entre o Collider de Player e outro Collider
+
+    }
