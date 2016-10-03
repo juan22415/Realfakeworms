@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
     public float dmgcenter; // posision centro explosion
 
 
-    PlayerHealth playerHealth;
+
 
     // Use this for initialization
     void Start () {
