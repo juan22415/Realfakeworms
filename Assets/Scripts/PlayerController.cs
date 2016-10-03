@@ -33,7 +33,9 @@ public class PlayerController : MonoBehaviour {
 		// Procurando por um component do tipo Animator nos GameObjects filhos de Player 
 		// Na verdade queremos o componente Animator que esta no GameObject Body
 		an = GetComponentInChildren<Animator>();
-		//gunTransform.eulerAngles = new Vector3(0f, 0f, -30f);
+        //gunTransform.eulerAngles = new Vector3(0f, 0f, -30f);
+        
+
 	}
 	
 	// Update is called once per frame
