@@ -17,6 +17,6 @@ public class MenuController : MonoBehaviour {
     // A função OnClick() troca de cena
     // Lembrem que adicionamos as cenas que nosso jogo conterá em File->Build Settings
 	public void OnClick(){
-		Application.LoadLevel("wormScene");
+		Application.LoadLevel("wormScene2");
 	}
 }

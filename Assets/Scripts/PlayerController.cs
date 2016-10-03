@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 public class PlayerController : MonoBehaviour {
 
 	public float velocity; // velocidade em x do player
@@ -8,6 +9,8 @@ public class PlayerController : MonoBehaviour {
 	public BoxCollider2D groundBC; // ref para o BoxCollider2D do chao
 	public GameObject bulletPrefab; // ref para o GameObject ( Pre-fabricado ) da nossa bala
     public GameObject graneadeprefab;
+
+    public Slider healthBar;
 
 	private BoxCollider2D bc; // ref para o BoxCollider2D do player
 	private Rigidbody2D rb; // ref para o Rigidbody2D do player
@@ -23,11 +26,15 @@ public class PlayerController : MonoBehaviour {
 	public Transform bulletInitialTransform; // ref para o Transform que guarda a posiçao inicial da bala
     public static int weapon;
 	private bool targetting; // o player esta mirando?
-    public float health = 100; // vida jugador
+    public  float health = 100; // vida jugador
     public float dmgcenter; // posision centro explosion
 
-	// Use this for initialization
-	void Start () {
+
+    PlayerHealth playerHealth;
+
+    // Use this for initialization
+    void Start () {
+        healthBar.value = 100;
 		bc = GetComponent<BoxCollider2D>();
 		rb = GetComponent<Rigidbody2D>();
 		// Procurando por um component do tipo Animator nos GameObjects filhos de Player 
@@ -40,6 +47,7 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+       
 
         if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
         {
@@ -193,6 +201,7 @@ public class PlayerController : MonoBehaviour {
             }
             dmgcenter = dmgcenter * -0.05f;//dmgcenter se multiplica para hacerlo maximo 50
             health = health-dmgcenter;
+            healthBar.value = healthBar.value - dmgcenter;
         }
         Debug.Log(health);
     }
