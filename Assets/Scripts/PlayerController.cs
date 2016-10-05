@@ -13,14 +13,14 @@ public class PlayerController : MonoBehaviour {
     public Slider healthBar;
 
 	private BoxCollider2D bc; // ref para o BoxCollider2D do player
-	private Rigidbody2D rb; // ref para o Rigidbody2D do player
+    private Rigidbody2D rb; // ref para o Rigidbody2D do player
 	private Animator an; // ref para o Animator do GameObject Body
 	private bool shooting; // o Player esta atirando?
 	private float timeShooting; // tempo que o player esta atirando
 	private Vector2 shootDirection; // ref para Vector2 normalizado que aponta na direçao do tiro do nosso player
 
 	public GameObject shootingEffect; // ref para o GameObject que contem o efeito de particula do Player atirando
-	public Transform gunTransform; // ref para o Transform do GameObject Gun ( Gun contem a sprite da arma e da mira )
+	public Transform gunTransform ; // ref para o Transform do GameObject Gun ( Gun contem a sprite da arma e da mira )
     public Transform granadetransform;
     public Transform bodyTransform; // ref para o Transform do GameObject Body ( Body contem a sprite do corpo da minhoca )
 	public Transform bulletInitialTransform; // ref para o Transform que guarda a posiçao inicial da bala
@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour {
     public  float health = 100; // vida jugador
     public float dmgcenter; // posision centro explosion
 
+    
 
 
 
@@ -40,15 +41,20 @@ public class PlayerController : MonoBehaviour {
 		// Procurando por um component do tipo Animator nos GameObjects filhos de Player 
 		// Na verdade queremos o componente Animator que esta no GameObject Body
 		an = GetComponentInChildren<Animator>();
-        //gunTransform.eulerAngles = new Vector3(0f, 0f, -30f);
-        
+        //gunTransform.eulerAngles = new Vector3(0f, 0f, -30f);    
+        an.SetBool("moving", false);
 
-	}
+    }
+
 	
 	// Update is called once per frame
 	void Update () {
-       
 
+        if (turncontroller.activeplayer == 1)
+        {
+
+     
+  
         if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
         {
             rb.velocity = Vector2.right * velocity;
@@ -86,6 +92,11 @@ public class PlayerController : MonoBehaviour {
             weapon = 1;
 			gunTransform.gameObject.SetActive(true);
             granadetransform.gameObject.SetActive(false);
+                
+
+
+
+
         }
         if (Input.GetKeyDown(KeyCode.E))
         { // A arma se torna visivel
@@ -93,7 +104,8 @@ public class PlayerController : MonoBehaviour {
             weapon = 2;
             granadetransform.gameObject.SetActive(true);
             gunTransform.gameObject.SetActive(false);
-        }
+            
+            }
         if ( targetting ){
 			UpdateTargetting();
 			UpdateShootDetection();
@@ -102,9 +114,10 @@ public class PlayerController : MonoBehaviour {
 		}
 		//gunTransform.localEulerAngles = new Vector3(0f, 0f, 30f);
 	}
+    }
 
-	// Verifica se o Player começou atirar
-	void UpdateShootDetection(){
+    // Verifica se o Player começou atirar
+    void UpdateShootDetection(){
 		// GetKeyDown retorna true apenas no update em que o player aperta a tecla
 		// GetKey retorna true enquanto a tecla estiver pressionada
 		// GetKeyUp retorna true no update em que o player solta a tecla
@@ -154,12 +167,14 @@ public class PlayerController : MonoBehaviour {
             GameObject bullet = Instantiate(bulletPrefab);
             bullet.transform.position = bulletInitialTransform.position;
             bullet.GetComponent<Rigidbody2D>().velocity = shootDirection * bulletMaxInitialVelocity * (timeShooting / maxTimeShooting);
+            turncontroller.activeplayer = 0;
         }
         if (weapon == 2)
         {
             GameObject bullet = Instantiate(graneadeprefab);
             bullet.transform.position = bulletInitialTransform.position;
             bullet.GetComponent<Rigidbody2D>().velocity = shootDirection * bulletMaxInitialVelocity * (timeShooting / maxTimeShooting);
+            turncontroller.activeplayer = 0;
         }
         
 	}
