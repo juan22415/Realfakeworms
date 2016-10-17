@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour {
    
     public Slider healthBar;
     public float time2;
-    public float time1;
+    
 
     private BoxCollider2D bc; // ref para o BoxCollider2D do player
     private Rigidbody2D rb; // ref para o Rigidbody2D do player
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour {
         //gunTransform.eulerAngles = new Vector3(0f, 0f, -30f);    
         an.SetBool("moving", false);
         time2 = 30;
-        
+        SettimeText();
 
     }
 
