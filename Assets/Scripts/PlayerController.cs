@@ -10,9 +10,13 @@ public class PlayerController : MonoBehaviour {
 	public GameObject bulletPrefab; // ref para o GameObject ( Pre-fabricado ) da nossa bala
     public GameObject graneadeprefab;
 
+    public Text time2Text;
+   
     public Slider healthBar;
+    public float time2;
+    public float time1;
 
-	private BoxCollider2D bc; // ref para o BoxCollider2D do player
+    private BoxCollider2D bc; // ref para o BoxCollider2D do player
     private Rigidbody2D rb; // ref para o Rigidbody2D do player
 	private Animator an; // ref para o Animator do GameObject Body
 	private bool shooting; // o Player esta atirando?
@@ -43,19 +47,24 @@ public class PlayerController : MonoBehaviour {
 		an = GetComponentInChildren<Animator>();
         //gunTransform.eulerAngles = new Vector3(0f, 0f, -30f);    
         an.SetBool("moving", false);
+        time2 = 30;
+        
 
     }
 
 	
 	// Update is called once per frame
 	void Update () {
-
+      
         if (turncontroller.activeplayer == 1)
         {
 
-     
-  
-        if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+         
+            SettimeText();
+            time2 = time2 - 1 * Time.deltaTime;
+            SettimeText();
+
+            if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
         {
             rb.velocity = Vector2.right * velocity;
             if (bodyTransform.localScale.x > 0f)
@@ -223,9 +232,14 @@ public class PlayerController : MonoBehaviour {
 
 
 
-        // Atualizar a velocidade do nosso Player baseando-se nas teclas pressionadas
+    // Atualizar a velocidade do nosso Player baseando-se nas teclas pressionadas
 
 
-        // Funçao chamada em todo frame no qual ha colissao entre o Collider de Player e outro Collider
+    // Funçao chamada em todo frame no qual ha colissao entre o Collider de Player e outro Collider
+    void SettimeText()
+    {
+        time2Text.text = "Time: " + Mathf.Round(time2);
 
     }
+   
+}

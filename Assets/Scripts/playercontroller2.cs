@@ -29,6 +29,8 @@ public class playercontroller2 : MonoBehaviour
     public float health = 100; // vida jugador
     public float dmgcenter; // posision centro explosion
 
+    public float time1;
+    public Text time1Text;
     // Use this for initialization
     void Start()
     {
@@ -40,7 +42,7 @@ public class playercontroller2 : MonoBehaviour
         an = GetComponentInChildren<Animator>();
         //gunTransform.eulerAngles = new Vector3(0f, 0f, -30f);    
         an.SetBool("moving", false);
-        
+        time1 = 30;
 
     }
 
@@ -51,7 +53,9 @@ public class playercontroller2 : MonoBehaviour
 
         if (turncontroller.activeplayer == 0)
         {
-
+            SettimeText1();
+            time1 = time1 - 1 * Time.deltaTime;
+            SettimeText1();
 
 
             if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
@@ -230,7 +234,11 @@ public class playercontroller2 : MonoBehaviour
         Debug.Log(health);
     }
 
+    void SettimeText1()
+    {
+        time1Text.text = "Time: " + Mathf.Round(time1);
 
+    }
 
     // Atualizar a velocidade do nosso Player baseando-se nas teclas pressionadas
 
