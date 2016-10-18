@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject graneadeprefab;
 
     public Text time2Text;
+    public Text player1turn;
    
     public Slider healthBar;
     public float time2;
@@ -51,18 +52,32 @@ public class PlayerController : MonoBehaviour {
         SettimeText();
 
     }
+    IEnumerator Example()
+    {
+        print(Time.time);
+        yield return new WaitForSeconds(5);
+        print(Time.time);
+    }
 
-	
-	// Update is called once per frame
-	void Update () {
-      
+    // Update is called once per frame
+    void Update () {
+        if (healthBar.value ==0)
+        {
+            player1turn.text = "Player 1 wins";
+            StartCoroutine(Example());
+            Application.LoadLevel(0);
+        }
+
         if (turncontroller.activeplayer == 1)
         {
 
-         
+
+            player1turn.text = "Player 2 turn";
+
             SettimeText();
             time2 = time2 - 1 * Time.deltaTime;
             SettimeText();
+           
 
             if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
         {
@@ -177,6 +192,7 @@ public class PlayerController : MonoBehaviour {
             bullet.transform.position = bulletInitialTransform.position;
             bullet.GetComponent<Rigidbody2D>().velocity = shootDirection * bulletMaxInitialVelocity * (timeShooting / maxTimeShooting);
             turncontroller.activeplayer = 0;
+            player1turn.text = "";
         }
         if (weapon == 2)
         {
@@ -184,6 +200,7 @@ public class PlayerController : MonoBehaviour {
             bullet.transform.position = bulletInitialTransform.position;
             bullet.GetComponent<Rigidbody2D>().velocity = shootDirection * bulletMaxInitialVelocity * (timeShooting / maxTimeShooting);
             turncontroller.activeplayer = 0;
+            player1turn.text = "";
         }
         
 	}
