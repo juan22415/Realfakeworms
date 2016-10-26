@@ -54,20 +54,29 @@ public class PlayerController : MonoBehaviour {
     }
     IEnumerator Example()
     {
-        print(Time.time);
+       
         yield return new WaitForSeconds(5);
-        print(Time.time);
+        Application.LoadLevel(0);
+
     }
 
     // Update is called once per frame
     void Update () {
+        
+
         if (healthBar.value ==0)
         {
+            player1turn.text = "";
             player1turn.text = "Player 1 wins";
             StartCoroutine(Example());
-            Application.LoadLevel(0);
+           
         }
-
+        if (time2 <= 0)
+        {
+            time2 = 30;
+            turncontroller.activeplayer = 0;
+            player1turn.text = "";
+        }
         if (turncontroller.activeplayer == 1)
         {
 
@@ -116,12 +125,33 @@ public class PlayerController : MonoBehaviour {
             weapon = 1;
 			gunTransform.gameObject.SetActive(true);
             granadetransform.gameObject.SetActive(false);
+                 }
+
+        if(Input.GetKeyDown(KeyCode.Q
+            ))
+            {
+                Vector3 mousePosScreen = Input.mousePosition;
+                Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(mousePosScreen);
+                Vector2 playerToMouse = new Vector2(mousePosWorld.x - transform.position.x,
+                                                    mousePosWorld.y - transform.position.y);
+                rb.transform.position = mousePosWorld+new Vector3(0,0,10);
+
+
                 
+                time2 = 30;
+                player1turn.text = "";
+                SettimeText();
+                turncontroller.activeplayer = 0;
 
 
 
 
-        }
+
+            }
+
+
+
+
         if (Input.GetKeyDown(KeyCode.E))
         { // A arma se torna visivel
             targetting = true;
@@ -193,6 +223,8 @@ public class PlayerController : MonoBehaviour {
             bullet.GetComponent<Rigidbody2D>().velocity = shootDirection * bulletMaxInitialVelocity * (timeShooting / maxTimeShooting);
             turncontroller.activeplayer = 0;
             player1turn.text = "";
+            time2 = 30;
+            SettimeText();
         }
         if (weapon == 2)
         {
@@ -201,6 +233,8 @@ public class PlayerController : MonoBehaviour {
             bullet.GetComponent<Rigidbody2D>().velocity = shootDirection * bulletMaxInitialVelocity * (timeShooting / maxTimeShooting);
             turncontroller.activeplayer = 0;
             player1turn.text = "";
+            time2 = 30;
+            SettimeText();
         }
         
 	}

@@ -14,7 +14,7 @@ public class playercontroller2 : MonoBehaviour
     public Slider healthBar;
 
     private BoxCollider2D bc; // ref para o BoxCollider2D do player
-    private Rigidbody2D rb; // ref para o Rigidbody2D do player
+    private Rigidbody2D rb1; // ref para o Rigidbody2D do player
     private Animator an; // ref para o Animator do GameObject Body
     private bool shooting; // o Player esta atirando?
     private float timeShooting; // tempo que o player esta atirando
@@ -37,7 +37,7 @@ public class playercontroller2 : MonoBehaviour
     {
         healthBar.value = 100;
         bc = GetComponent<BoxCollider2D>();
-        rb = GetComponent<Rigidbody2D>();
+        rb1 = GetComponent<Rigidbody2D>();
         // Procurando por um component do tipo Animator nos GameObjects filhos de Player 
         // Na verdade queremos o componente Animator que esta no GameObject Body
         an = GetComponentInChildren<Animator>();
@@ -48,9 +48,12 @@ public class playercontroller2 : MonoBehaviour
     }
     IEnumerator Example()
     {
-        print(Time.time);
+        
+       
         yield return new WaitForSeconds(5);
-        print(Time.time);
+      
+        Application.LoadLevel(0);
+
     }
 
     // Update is called once per frame
@@ -58,11 +61,17 @@ public class playercontroller2 : MonoBehaviour
     {
         if (healthBar.value == 0)
         {
+            player2turn.text = "";
             player2turn.text = "Player 2 wins";
             StartCoroutine(Example());
-            Application.LoadLevel(0);
+           
         }
-
+        if (time1 <= 0)
+        {
+            time1= 30;
+            turncontroller.activeplayer = 1;
+            player2turn.text = "";
+        }
         if (turncontroller.activeplayer == 0)
         {
             player2turn.text = "Player 1 turn";
@@ -73,7 +82,7 @@ public class playercontroller2 : MonoBehaviour
 
             if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
             {
-                rb.velocity = Vector2.right * velocity;
+                rb1.velocity = Vector2.right * velocity;
                 if (bodyTransform.localScale.x > 0f)
                     bodyTransform.localScale = new Vector3(-bodyTransform.localScale.x, bodyTransform.localScale.y, 0f);
 
@@ -81,7 +90,7 @@ public class playercontroller2 : MonoBehaviour
             }
             if (!Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow))
             {
-                rb.velocity = -Vector2.right * velocity;
+                rb1.velocity = -Vector2.right * velocity;
                 if (bodyTransform.localScale.x < 0f)
                     bodyTransform.localScale = new Vector3(-bodyTransform.localScale.x, bodyTransform.localScale.y, 0f);
 
@@ -90,12 +99,12 @@ public class playercontroller2 : MonoBehaviour
             if (Input.GetKeyUp(KeyCode.Space))
             {
 
-                rb.AddForce(new Vector2(0, 400));
+                rb1.AddForce(new Vector2(0, 400));
 
                 an.SetBool("moving", false);
             }
 
-            if (rb.velocity == new Vector2(0, 0))
+            if (rb1.velocity == new Vector2(0, 0))
             {
                 an.SetBool("moving", false);
             }
@@ -122,6 +131,23 @@ public class playercontroller2 : MonoBehaviour
                 gunTransform.gameObject.SetActive(false);
                 
             }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Vector3 mousePosScreen = Input.mousePosition;
+                Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(mousePosScreen);
+                Vector2 playerToMouse = new Vector2(mousePosWorld.x - transform.position.x,
+                                                    mousePosWorld.y - transform.position.y);
+                rb1.transform.position = mousePosWorld + new Vector3(0, 0, 10);
+
+                time1 = 30;
+                turncontroller.activeplayer = 1;
+                player2turn.text = "";
+                SettimeText1();
+
+
+            }
+
             if (targetting)
             {
                 UpdateTargetting();
@@ -192,6 +218,9 @@ public class playercontroller2 : MonoBehaviour
             bullet.GetComponent<Rigidbody2D>().velocity = shootDirection * bulletMaxInitialVelocity * (timeShooting / maxTimeShooting);
             turncontroller.activeplayer = 1;
             player2turn.text = "";
+            time1 = 30;
+            SettimeText1();
+
         }
         if (PlayerController.weapon == 2)
         {
@@ -200,6 +229,8 @@ public class playercontroller2 : MonoBehaviour
             bullet.GetComponent<Rigidbody2D>().velocity = shootDirection * bulletMaxInitialVelocity * (timeShooting / maxTimeShooting);
             turncontroller.activeplayer = 1;
             player2turn.text = "";
+            time1 = 30;
+            SettimeText1();
         }
 
     }

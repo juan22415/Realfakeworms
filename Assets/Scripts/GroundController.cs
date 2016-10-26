@@ -12,7 +12,7 @@ public class GroundController : MonoBehaviour {
 	void Start(){
 		sr = GetComponent<SpriteRenderer>(); 
 		// sr : variavel global de GroundController, ref para o SpriteRenderer de Ground
-		Texture2D tex = (Texture2D) Resources.Load("ground4");
+		Texture2D tex = (Texture2D) Resources.Load("mapa2");
 		// Resources.Load("nome_do_arquivo") carrega um arquivo localizado
 		// em Assets/Resources
 		Texture2D tex_clone = (Texture2D) Instantiate(tex);

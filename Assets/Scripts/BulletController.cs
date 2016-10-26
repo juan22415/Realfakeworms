@@ -62,7 +62,7 @@ public class BulletController : MonoBehaviour {
         // Quando a bala colide com outro corpo que nao seja o Player ela 
         //não mais atualiza a rotação baseado na trajetória
         // e o efeito de partícula do rastro da bala é desativado
-        if (coll.collider.tag == "Ground"|| coll.collider.tag == "player")
+        if (coll.collider.tag == "Ground"|| coll.collider.tag == "Player")
         {
 			updateAngle = false;
 			//bulletSmoke.SetActive(false);
