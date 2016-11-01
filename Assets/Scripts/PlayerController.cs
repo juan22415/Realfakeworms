@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
 
     public Text time2Text;
     public Text player1turn;
+    public Text winer;
    
     public Slider healthBar;
     public float time2;
@@ -66,8 +67,9 @@ public class PlayerController : MonoBehaviour {
 
         if (healthBar.value ==0)
         {
+            
             player1turn.text = "";
-            player1turn.text = "Player 1 wins";
+            winer.text = "PLAYER1 WINS";
             StartCoroutine(Example());
            
         }
@@ -81,7 +83,7 @@ public class PlayerController : MonoBehaviour {
         {
 
 
-            player1turn.text = "Player 2 turn";
+            player1turn.text = "PLAYER 2 TURN";
 
             SettimeText();
             time2 = time2 - 1 * Time.deltaTime;

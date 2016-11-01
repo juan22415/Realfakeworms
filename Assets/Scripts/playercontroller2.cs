@@ -32,6 +32,7 @@ public class playercontroller2 : MonoBehaviour
     public float time1;
     public Text time1Text;
     public Text player2turn;
+    public Text winer;
     // Use this for initialization
     void Start()
     {
@@ -61,8 +62,9 @@ public class playercontroller2 : MonoBehaviour
     {
         if (healthBar.value == 0)
         {
+            
             player2turn.text = "";
-            player2turn.text = "Player 2 wins";
+            winer.text = "PLAYER2 WINS";
             StartCoroutine(Example());
            
         }
@@ -74,7 +76,7 @@ public class playercontroller2 : MonoBehaviour
         }
         if (turncontroller.activeplayer == 0)
         {
-            player2turn.text = "Player 1 turn";
+            player2turn.text = "PLAYER 1 TURN";
             SettimeText1();
             time1 = time1 - 1 * Time.deltaTime;
             SettimeText1();
