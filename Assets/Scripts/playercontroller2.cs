@@ -33,6 +33,7 @@ public class playercontroller2 : MonoBehaviour
     public Text time1Text;
     public Text player2turn;
     public Text winer;
+    public bool grounded;
     // Use this for initialization
     void Start()
     {
@@ -45,6 +46,7 @@ public class playercontroller2 : MonoBehaviour
         //gunTransform.eulerAngles = new Vector3(0f, 0f, -30f);    
         an.SetBool("moving", false);
         time1 = 30;
+        grounded = true;
 
     }
     IEnumerator Example()
@@ -80,39 +82,40 @@ public class playercontroller2 : MonoBehaviour
             SettimeText1();
             time1 = time1 - 1 * Time.deltaTime;
             SettimeText1();
-          
-
-            if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
-            {
-                rb1.velocity = Vector2.right * velocity;
-                if (bodyTransform.localScale.x > 0f)
-                    bodyTransform.localScale = new Vector3(-bodyTransform.localScale.x, bodyTransform.localScale.y, 0f);
-
-                an.SetBool("moving", true);
-            }
-            if (!Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow))
-            {
-                rb1.velocity = -Vector2.right * velocity;
-                if (bodyTransform.localScale.x < 0f)
-                    bodyTransform.localScale = new Vector3(-bodyTransform.localScale.x, bodyTransform.localScale.y, 0f);
-
-                an.SetBool("moving", true);
-            }
-            if (Input.GetKeyUp(KeyCode.Space))
+            if (grounded == true)
             {
 
-                rb1.AddForce(new Vector2(0, 400));
+                if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+                {
+                    rb1.velocity = Vector2.right * velocity;
+                    if (bodyTransform.localScale.x > 0f)
+                        bodyTransform.localScale = new Vector3(-bodyTransform.localScale.x, bodyTransform.localScale.y, 0f);
 
-                an.SetBool("moving", false);
+                    an.SetBool("moving", true);
+                }
+                if (!Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow))
+                {
+                    rb1.velocity = -Vector2.right * velocity;
+                    if (bodyTransform.localScale.x < 0f)
+                        bodyTransform.localScale = new Vector3(-bodyTransform.localScale.x, bodyTransform.localScale.y, 0f);
+
+                    an.SetBool("moving", true);
+                }
+                if (Input.GetKeyUp(KeyCode.Space))
+                {
+
+                    rb1.AddForce(new Vector2(0, 400));
+
+                    an.SetBool("moving", false);
+                }
+
+                if (rb1.velocity == new Vector2(0, 0))
+                {
+                    an.SetBool("moving", false);
+                }
+
+
             }
-
-            if (rb1.velocity == new Vector2(0, 0))
-            {
-                an.SetBool("moving", false);
-            }
-
-
-
 
             if (Input.GetKeyDown(KeyCode.W))
             { // A arma se torna visivel
@@ -265,6 +268,34 @@ public class playercontroller2 : MonoBehaviour
         granadetransform.localEulerAngles = new Vector3(0f, 0f, angle + 180);
     }
 
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.collider.tag == "Ground")
+
+        {
+            grounded = true;
+        }
+
+    }
+
+    void OnCollisionExit2D(Collision2D coll)
+    {
+        if (coll.collider.tag == "Ground")
+        {
+            grounded = false;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
     void OnTriggerEnter2D(Collider2D dmg) //colision con balas
     {
         if (dmg.tag == "ammo")
@@ -275,7 +306,15 @@ public class playercontroller2 : MonoBehaviour
             {
                 dmgcenter = dmgcenter * -100;
             }
+
+
             dmgcenter = dmgcenter * -0.05f;//dmgcenter se multiplica para hacerlo maximo 50
+            if (dmgcenter > 50)
+            {
+
+                dmgcenter = 30;
+            }
+
             health = health - dmgcenter;
             healthBar.value = healthBar.value - dmgcenter;
         }

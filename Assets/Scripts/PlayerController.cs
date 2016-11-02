@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour {
 	private bool targetting; // o player esta mirando?
     public  float health = 100; // vida jugador
     public float dmgcenter; // posision centro explosion
+    public bool grounded;
 
     
 
@@ -51,7 +52,7 @@ public class PlayerController : MonoBehaviour {
         an.SetBool("moving", false);
         time2 = 30;
         SettimeText();
-
+        grounded = true;
     }
     IEnumerator Example()
     {
@@ -88,39 +89,44 @@ public class PlayerController : MonoBehaviour {
             SettimeText();
             time2 = time2 - 1 * Time.deltaTime;
             SettimeText();
-           
-
-            if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
-        {
-            rb.velocity = Vector2.right * velocity;
-            if (bodyTransform.localScale.x > 0f)
-                bodyTransform.localScale = new Vector3(-bodyTransform.localScale.x, bodyTransform.localScale.y, 0f);
-
-            an.SetBool("moving", true);
-        }
-        if (!Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow))
-        {
-            rb.velocity = -Vector2.right * velocity;
-            if (bodyTransform.localScale.x < 0f)
-                bodyTransform.localScale = new Vector3(-bodyTransform.localScale.x, bodyTransform.localScale.y, 0f);
-
-            an.SetBool("moving", true);
-        }
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-
-            rb.AddForce(new Vector2(0, 400));
-           
-            an.SetBool("moving", false);
-        }
-
-        if (rb.velocity == new Vector2(0, 0))
-        {
-            an.SetBool("moving", false);
-        }
 
 
+            if (grounded == true)
 
+            {
+
+
+                if (Input.GetKey(KeyCode.RightArrow) && !Input.GetKey(KeyCode.LeftArrow))
+                {
+                    rb.velocity = Vector2.right * velocity;
+                    if (bodyTransform.localScale.x > 0f)
+                        bodyTransform.localScale = new Vector3(-bodyTransform.localScale.x, bodyTransform.localScale.y, 0f);
+
+                    an.SetBool("moving", true);
+                }
+                if (!Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.LeftArrow))
+                {
+                    rb.velocity = -Vector2.right * velocity;
+                    if (bodyTransform.localScale.x < 0f)
+                        bodyTransform.localScale = new Vector3(-bodyTransform.localScale.x, bodyTransform.localScale.y, 0f);
+
+                    an.SetBool("moving", true);
+                }
+                if (Input.GetKeyUp(KeyCode.Space))
+                {
+
+                    rb.AddForce(new Vector2(0, 400));
+
+                    an.SetBool("moving", false);
+                }
+
+                if (rb.velocity == new Vector2(0, 0))
+                {
+                    an.SetBool("moving", false);
+                }
+
+
+            }
 
         if ( Input.GetKeyDown(KeyCode.W) ){ // A arma se torna visivel
 			targetting = true;
@@ -266,6 +272,26 @@ public class PlayerController : MonoBehaviour {
         granadetransform.localEulerAngles = new Vector3(0f, 0f, angle+180);
     }
 
+
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+       if (coll.collider.tag== "Ground")
+
+       {
+            grounded = true;
+        }
+
+    }
+
+    void OnCollisionExit2D(Collision2D coll)
+    {
+        if (coll.collider.tag == "Ground")
+       {
+            grounded = false;
+       }
+    }
+
     void OnTriggerEnter2D(Collider2D dmg) //colision con balas
     {
         if (dmg.tag == "ammo")
@@ -277,6 +303,12 @@ public class PlayerController : MonoBehaviour {
                 dmgcenter = dmgcenter * -100;
             }
             dmgcenter = dmgcenter * -0.05f;//dmgcenter se multiplica para hacerlo maximo 50
+
+            if (dmgcenter>50)
+                {
+
+                dmgcenter = 30;
+            }
             health = health-dmgcenter;
             healthBar.value = healthBar.value - dmgcenter;
         }
