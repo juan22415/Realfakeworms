@@ -282,6 +282,12 @@ public class PlayerController : MonoBehaviour {
             grounded = true;
         }
 
+        if (coll.collider.tag == "Floor")
+
+        {
+            healthBar.value = 0;
+        }
+
     }
 
     void OnCollisionExit2D(Collision2D coll)
@@ -308,6 +314,12 @@ public class PlayerController : MonoBehaviour {
                 {
 
                 dmgcenter = 30;
+            }
+
+            else if (dmgcenter<5)
+            {
+
+                dmgcenter = 20;
             }
             health = health-dmgcenter;
             healthBar.value = healthBar.value - dmgcenter;

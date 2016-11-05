@@ -12,6 +12,7 @@ public class effectvar : MonoBehaviour {
 	void Start () {
         timer = 20;
         ae = GetComponent<AreaEffector2D>();
+        ae.forceMagnitude = Random.Range(-3f, 3f);
         wind.value = ae.forceMagnitude;
 
     }
