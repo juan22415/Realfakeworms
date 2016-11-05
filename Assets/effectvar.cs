@@ -7,6 +7,7 @@ public class effectvar : MonoBehaviour {
     AreaEffector2D ae;
     public float timer;
     public Slider wind;
+    public Text windchange;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +20,8 @@ public class effectvar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        windchange.text = "Wind changes in: " + Mathf.Round(timer);
         timer -= Time.deltaTime;
         if (timer <0)
         {

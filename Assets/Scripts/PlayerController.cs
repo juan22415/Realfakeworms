@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour {
     public float time2;
     
 
-    private BoxCollider2D bc; // ref para o BoxCollider2D do player
+    
     private Rigidbody2D rb; // ref para o Rigidbody2D do player
 	private Animator an; // ref para o Animator do GameObject Body
 	private bool shooting; // o Player esta atirando?
@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         healthBar.value = 100;
-		bc = GetComponent<BoxCollider2D>();
+		
 		rb = GetComponent<Rigidbody2D>();
 		// Procurando por um component do tipo Animator nos GameObjects filhos de Player 
 		// Na verdade queremos o componente Animator que esta no GameObject Body
@@ -91,6 +91,14 @@ public class PlayerController : MonoBehaviour {
             turncontroller.activeplayer = 0;
             player1turn.text = "";
         }
+
+        if (turncontroller.activeplayer == 0)
+        {
+            gunTransform.gameObject.SetActive(false);
+            granadetransform.gameObject.SetActive(false);
+            targetting = false;
+        }
+
         if (turncontroller.activeplayer == 1)
         {
 

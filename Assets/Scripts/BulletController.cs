@@ -58,6 +58,8 @@ public class BulletController : MonoBehaviour {
         }
     }
 
+ 
+
     void OnCollisionEnter2D(Collision2D coll) {
         // Quando a bala colide com outro corpo que nao seja o Player ela 
         //não mais atualiza a rotação baseado na trajetória
@@ -69,7 +71,8 @@ public class BulletController : MonoBehaviour {
           
             if (PlayerController.weapon == 1)
             {
-                
+
+                destructionCircle.radius = 1;
                 gmgdistance = groundController.distancedmg(destructionCircle);
                 groundController.DestroyGround(destructionCircle);
                 Destroy(gameObject);
