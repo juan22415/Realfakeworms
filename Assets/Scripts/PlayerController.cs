@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class PlayerController : MonoBehaviour {
 
 	public float velocity; // velocidade em x do player
@@ -58,8 +60,17 @@ public class PlayerController : MonoBehaviour {
     {
        
         yield return new WaitForSeconds(5);
-        Application.LoadLevel(0);
+        SceneManager.LoadScene(0);
 
+        }
+
+    IEnumerator Tpfix()
+    {
+
+        yield return new WaitForSeconds(0.1f);
+        turncontroller.activeplayer = 0;
+        player1turn.text = "";
+        SettimeText();
     }
 
     // Update is called once per frame
@@ -135,27 +146,24 @@ public class PlayerController : MonoBehaviour {
             granadetransform.gameObject.SetActive(false);
                  }
 
-        if(Input.GetKeyDown(KeyCode.Q
-            ))
+        if(Input.GetKeyUp(KeyCode.R ))
             {
                 Vector3 mousePosScreen = Input.mousePosition;
                 Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(mousePosScreen);
-                Vector2 playerToMouse = new Vector2(mousePosWorld.x - transform.position.x,
-                                                    mousePosWorld.y - transform.position.y);
-                rb.transform.position = mousePosWorld+new Vector3(0,0,10);
+
+
+                transform.position = mousePosWorld + new Vector3(0, 0, 10);
+               // rb.transform.position = mousePosWorld+new Vector3(0,0,10);
 
 
                 
                 time2 = 30;
-                player1turn.text = "";
-                SettimeText();
-                turncontroller.activeplayer = 0;
+                StartCoroutine(Tpfix());
+                
+                
+                
 
-
-
-
-
-            }
+              }
 
 
 

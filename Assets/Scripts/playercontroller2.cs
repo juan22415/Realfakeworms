@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 public class playercontroller2 : MonoBehaviour
 {
 
@@ -54,8 +56,8 @@ public class playercontroller2 : MonoBehaviour
         
        
         yield return new WaitForSeconds(5);
-      
-        Application.LoadLevel(0);
+
+        SceneManager.LoadScene(0);
 
     }
 
@@ -137,13 +139,14 @@ public class playercontroller2 : MonoBehaviour
                 
             }
 
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyUp(KeyCode.R))
             {
                 Vector3 mousePosScreen = Input.mousePosition;
                 Vector3 mousePosWorld = Camera.main.ScreenToWorldPoint(mousePosScreen);
-                Vector2 playerToMouse = new Vector2(mousePosWorld.x - transform.position.x,
-                                                    mousePosWorld.y - transform.position.y);
-                rb1.transform.position = mousePosWorld + new Vector3(0, 0, 10);
+               
+
+                transform.position= mousePosWorld + new Vector3(0, 0, 10);
+                //rb1.transform.position = mousePosWorld + new Vector3(0, 0, 10);
 
                 time1 = 30;
                 turncontroller.activeplayer = 1;
