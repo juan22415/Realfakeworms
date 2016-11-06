@@ -19,9 +19,16 @@ public class BulletController : MonoBehaviour {
     public float timew = 5f;
     public static float gmgdistance;
 
+    public AudioClip granadexp;
+    public AudioClip Bazookaexp;
+    private AudioSource source;
+
     // Use this for initialization
     void Start() {
         rb = GetComponent<Rigidbody2D>();
+        source = GetComponent<AudioSource>();
+
+
         //rb.velocity = new Vector2(5f, 10f);
 
     }
@@ -35,6 +42,7 @@ public class BulletController : MonoBehaviour {
 
             if (timew < 0)
             {
+                source.PlayOneShot(granadexp);
                 gmgdistance = groundController.distancedmg(destructionCircle);
                 groundController.DestroyGround(destructionCircle);
                 Destroy(gameObject);
@@ -72,6 +80,7 @@ public class BulletController : MonoBehaviour {
             if (PlayerController.weapon == 1)
             {
 
+                source.PlayOneShot(Bazookaexp);
                 destructionCircle.radius = 1;
                 gmgdistance = groundController.distancedmg(destructionCircle);
                 groundController.DestroyGround(destructionCircle);
