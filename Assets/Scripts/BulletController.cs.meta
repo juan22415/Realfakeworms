@@ -1,10 +1,14 @@
 fileFormatVersion: 2
 guid: 2a932b30b7ac13a499d5d401643afd2f
-timeCreated: 1429636662
+timeCreated: 1479149166
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - bulletSpriteTransform: {instanceID: 0}
+  - destructionCircle: {instanceID: 0}
+  - granadexp: {fileID: 8300000, guid: 57af83ad9dc60d14db028fac06275354, type: 3}
+  - Bazookaexp: {fileID: 8300000, guid: 81d03a1f8ee2a6d4e96425d03982b221, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

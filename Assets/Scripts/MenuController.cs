@@ -18,6 +18,6 @@ public class MenuController : MonoBehaviour {
     // A função OnClick() troca de cena
     // Lembrem que adicionamos as cenas que nosso jogo conterá em File->Build Settings
 	public void OnClick(){
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 }

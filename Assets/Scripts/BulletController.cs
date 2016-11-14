@@ -21,7 +21,7 @@ public class BulletController : MonoBehaviour {
 
     public AudioClip granadexp;
     public AudioClip Bazookaexp;
-    private AudioSource source;
+    public AudioSource source;
 
     // Use this for initialization
     void Start() {

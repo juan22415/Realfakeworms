@@ -14,8 +14,10 @@ public class playercontroller2 : MonoBehaviour
     public GameObject graneadeprefab;
 
     public Slider healthBar;
+    public AudioSource source;
+    public AudioClip tp;
 
-    
+
     private Rigidbody2D rb1; // ref para o Rigidbody2D do player
     private Animator an; // ref para o Animator do GameObject Body
     private bool shooting; // o Player esta atirando?
@@ -39,6 +41,7 @@ public class playercontroller2 : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        source = GetComponent<AudioSource>();
         healthBar.value = 100;
         
         rb1 = GetComponent<Rigidbody2D>();
@@ -154,7 +157,7 @@ public class playercontroller2 : MonoBehaviour
 
                 transform.position= mousePosWorld + new Vector3(0, 0, 10);
                 //rb1.transform.position = mousePosWorld + new Vector3(0, 0, 10);
-
+                source.PlayOneShot(tp);
                 time1 = 30;
                 turncontroller.activeplayer = 1;
                 player2turn.text = "";
